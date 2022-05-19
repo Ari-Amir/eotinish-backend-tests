@@ -1,4 +1,4 @@
-package launcher
+package kz.btsd.launcher
 
 internal fun parseLauncherArgs(args: List<String>): LauncherArgs {
    val a = parseArgs(args)

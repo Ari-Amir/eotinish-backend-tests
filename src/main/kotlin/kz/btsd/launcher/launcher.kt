@@ -1,4 +1,4 @@
-package launcher
+package kz.btsd.launcher
 
 import io.kotest.core.TagExpression
 import io.kotest.core.descriptors.Descriptor
@@ -59,7 +59,7 @@ private fun scan(packageName: String?): DiscoveryResult {
 
 /**
  * Compares test descriptions to a given test path (delimited with ' -- ').
- * The comparison ignores test prefixes, so an application using the launcher should not
+ * The comparison ignores test prefixes, so an application using the kz.btsd.launcher should not
  * include test name prefixes in the test path.
  */
 private class TestPathTestCaseFilter(

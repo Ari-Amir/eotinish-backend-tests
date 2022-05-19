@@ -1,9 +1,11 @@
+import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.6.10"
     application
     id("io.qameta.allure") version "2.8.1"
+    id("com.github.johnrengelman.shadow") version "5.2.0"
 }
 
 group = "ru.vladimirsofin"
@@ -34,6 +36,14 @@ tasks.withType<Test>().configureEach {
 
 application {
     mainClass.set("MainKt")
+}
+
+val shadowJar by tasks.getting(ShadowJar::class) {
+    isZip64 = true
+    manifest {
+        attributes["Main-Class"] = "kz.btsd.launcher.MainKt"
+    }
+    from(sourceSets["test"].output)
 }
 
 //allure {
