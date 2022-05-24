@@ -1,7 +1,7 @@
 FROM gradle:6.1.1-jdk8 as builder
-COPY --chown=gradle . /rscomptests
-WORKDIR /rscomptests
+COPY --chown=gradle . /tests
+WORKDIR /tests
 RUN gradle -s shadowJar
-COPY ./src/main/kotlin/tests/* /rscomptests/build/libs/
-ENTRYPOINT exec java -jar /rscomptests/build/libs/eotinish-system-tests-all.jar
+COPY ./src/main/resources/* /tests/build/libs/
+ENTRYPOINT exec java -jar /tests/build/libs/eotinish-backend-tests-all.jar
 

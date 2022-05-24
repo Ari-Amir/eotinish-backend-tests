@@ -1,3 +1,3 @@
 
-rootProject.name = "backend-testing-using-kotest"
+rootProject.name = "eotinish-backend-tests"
 
