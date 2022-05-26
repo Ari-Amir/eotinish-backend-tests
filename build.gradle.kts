@@ -18,6 +18,8 @@ repositories {
 dependencies {
     implementation("io.kotest:kotest-runner-junit5:$versionKotest")
     implementation(kotlin("stdlib-jdk8"))
+    implementation("org.json:json:20180813")
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
 }
 
 application {
