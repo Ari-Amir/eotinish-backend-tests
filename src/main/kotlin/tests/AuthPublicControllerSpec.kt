@@ -51,7 +51,8 @@ class AuthPublicControllerSpec : FeatureSpec({
         }
 
         scenario("POST /api/public/v1/refresh Пользователь может обновить свой accessToken, используя refreshToken") {
-            var response: Response
+            val authResponse: Response
+            val refreshResponse: Response
 
             val payload = """{
                 |"username": "${Environment.user}",
@@ -60,25 +61,24 @@ class AuthPublicControllerSpec : FeatureSpec({
                 |"token2Fa": "string" }""".trimMargin()
 
             try {
-                response = HttpSender.sendPost("/api/public/v1/login", payload)
+                authResponse = HttpSender.sendPost("/api/public/v1/login", payload)
             } catch (e: Exception) {
                 throw AssertionError("Exception occurred during sending request: ${e.cause}")
             }
 
-            val body = JSONObject(response.body?.string())
+            val body = JSONObject(authResponse.body?.string())
             val accessToken = body.getString("accessToken")
             val refreshToken = body.getString("refreshToken")
 
             try {
-                response = HttpSender.sendPost("/api/public/v1/refresh", "{ \"refreshToken\": \"$refreshToken\" }")
+                refreshResponse = HttpSender.sendPost("/api/public/v1/refresh", "{ \"refreshToken\": \"$refreshToken\" }")
             } catch (e: Exception) {
                 throw AssertionError("Exception occurred during sending request: ${e.cause}")
             }
 
-            val newAccessToken = JSONObject(response.body?.string()).getString("accessToken")
+            val newAccessToken = JSONObject(refreshResponse.body?.string()).getString("accessToken")
 
             accessToken shouldNotBe newAccessToken
-
         }
     }
 

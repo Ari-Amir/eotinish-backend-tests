@@ -1,16 +1,14 @@
 package kz.btsd.launcher
 
+import Environment
 import com.github.ajalt.mordant.TermColors
 import io.kotest.common.runBlocking
-import io.kotest.engine.listener.CollectingTestEngineListener
-import io.kotest.engine.listener.CompositeTestEngineListener
-import io.kotest.engine.listener.EnhancedConsoleTestEngineListener
-import io.kotest.engine.listener.LoggingTestEngineListener
-import io.kotest.engine.listener.PinnedSpecTestEngineListener
-import io.kotest.engine.listener.ThreadSafeTestEngineListener
+import io.kotest.engine.listener.*
 import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
+
+   Environment.start()
 
    val launcherArgs = parseLauncherArgs(args.toList())
 
@@ -33,6 +31,8 @@ fun main(args: Array<String>) {
          },
       )
    }
+
+   Environment.stop()
 
    // there could be threads in the background that will stop the kz.btsd.launcher shutting down
    // for example if a test keeps a thread running,

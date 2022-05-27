@@ -14,4 +14,12 @@ object ConfigHelper {
 
     val BACKEND_HOST = (ConfigParser(config)["backend"] as JSONObject).get("host").toString()
     val BACKEND_PORT = (ConfigParser(config)["backend"] as JSONObject).get("port").toString().toInt()
+
+    val DB_HOST = (ConfigParser(config)["db"] as JSONObject).get("host").toString()
+    val DB_NAME = (ConfigParser(config)["db"] as JSONObject).get("name").toString()
+    val DB_PORT = (ConfigParser(config)["db"] as JSONObject).get("port").toString()
+    val DB_USER = (ConfigParser(config)["db"] as JSONObject).get("user").toString()
+    val DB_PASS = (ConfigParser(config)["db"] as JSONObject).get("pass").toString()
+
+    val IMAGES_BACKEND = (ConfigParser(config)["images"] as JSONObject).get("backend").toString()
 }

@@ -16,10 +16,16 @@ repositories {
 }
 
 dependencies {
-    implementation("io.kotest:kotest-runner-junit5:$versionKotest")
     implementation(kotlin("stdlib-jdk8"))
+    implementation("io.kotest:kotest-runner-junit5:$versionKotest")
+
     implementation("org.json:json:20180813")
     implementation("com.squareup.okhttp3:okhttp:4.9.3")
+
+    implementation("org.testcontainers:testcontainers:1.11.2")
+    implementation("org.testcontainers:postgresql:1.12.3")
+    implementation("org.postgresql:postgresql:42.2.7")
+    implementation("org.springframework:spring-jdbc:5.1.9.RELEASE")
 }
 
 application {
