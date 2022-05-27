@@ -14,7 +14,7 @@ import okhttp3.Response
 import okhttp3.ResponseBody
 import org.json.JSONObject
 
-
+@Suppress("BlockingMethodInNonBlockingContext")
 class AuthPublicControllerSpec : FeatureSpec({
 
     feature("auth-public-controller") {
@@ -50,10 +50,8 @@ class AuthPublicControllerSpec : FeatureSpec({
             response shouldBe correctResponse(expectedResponse, true)
         }
 
-        scenario("POST /api/public/v1/refresh Обновление токена") {
-
+        scenario("POST /api/public/v1/refresh Пользователь может обновить свой accessToken, используя refreshToken") {
             var response: Response
-
 
             val payload = """{
                 |"username": "${Environment.user}",
@@ -67,7 +65,9 @@ class AuthPublicControllerSpec : FeatureSpec({
                 throw AssertionError("Exception occurred during sending request: ${e.cause}")
             }
 
-            val refreshToken = JSONObject(response.body?.string()).getString("refreshToken")
+            val body = JSONObject(response.body?.string())
+            val accessToken = body.getString("accessToken")
+            val refreshToken = body.getString("refreshToken")
 
             try {
                 response = HttpSender.sendPost("/api/public/v1/refresh", "{ \"refreshToken\": \"$refreshToken\" }")
@@ -75,9 +75,9 @@ class AuthPublicControllerSpec : FeatureSpec({
                 throw AssertionError("Exception occurred during sending request: ${e.cause}")
             }
 
-            val newRefreshToken = JSONObject(response.body?.string()).getString("accessToken")
+            val newAccessToken = JSONObject(response.body?.string()).getString("accessToken")
 
-            newRefreshToken shouldNotBe refreshToken
+            accessToken shouldNotBe newAccessToken
 
         }
     }
