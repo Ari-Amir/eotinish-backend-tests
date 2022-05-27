@@ -14,7 +14,7 @@ fun correctResponse(expectedResponseUpdate: Response, contains:Boolean = false, 
         if (value.code != expectedResponseUpdate.code)
             errors.add(ERROR_TEMPLATE.format("http response code", expectedResponseUpdate.code, value.code))
 
-        var body = value.body!!.string()
+        val body = value.body!!.string()
         var expectedBody = ""
 
         try {

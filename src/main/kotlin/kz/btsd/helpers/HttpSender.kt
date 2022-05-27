@@ -6,12 +6,9 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 
 object HttpSender {
-    val okHttpClient = OkHttpClient()
+    private val okHttpClient = OkHttpClient()
 
-    fun sendPost(
-        endpoint: String,
-        payload: String
-    ): Response {
+    fun sendPost(endpoint: String, payload: String): Response {
         val request = Request.Builder()
             .header("Content-Type", " application/json")
             .url("https://${ConfigHelper.BACKEND_HOST}$endpoint")
@@ -21,3 +18,4 @@ object HttpSender {
         return okHttpClient.newCall(request).execute()
     }
 }
+
