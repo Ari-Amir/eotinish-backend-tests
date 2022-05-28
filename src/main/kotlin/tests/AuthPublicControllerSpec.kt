@@ -14,7 +14,6 @@ import okhttp3.Response
 import okhttp3.ResponseBody
 import org.json.JSONObject
 
-@Suppress("BlockingMethodInNonBlockingContext")
 class AuthPublicControllerSpec : FeatureSpec({
 
     feature("auth-public-controller") {
