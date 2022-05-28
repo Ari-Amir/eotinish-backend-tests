@@ -49,7 +49,52 @@ class AuthPublicControllerSpec : FeatureSpec({
             response shouldBe correctResponse(expectedResponse, true)
         }
 
-        scenario("POST /api/public/v1/refresh Пользователь может обновить свой accessToken, используя refreshToken") {
+        scenario("GET /api/public/v1/login/eds/token " +
+                "POST /api/public/v1/login/eds Пользователь может авторизоваться с помощью ЭЦП").config(enabled = false) {
+            val tokenResponse: Response
+
+            try {
+                tokenResponse = HttpSender.sendGet("/api/public/v1/login/eds/token")
+            } catch (e: Exception) {
+                throw AssertionError("Exception occurred during sending request: ${e.cause}")
+            }
+
+            val body = JSONObject( tokenResponse.body?.string() )
+            val sessionId = body.getString("sessionId")
+            val token = body.getString("token")
+//          TODO: нужно узнать у разработчиков, фронта как они генерят sign, используя token
+            val sign = ""
+
+            val authResponse: Response
+
+            val payload = """{
+                |"sessionId": "$sessionId",
+                |"sign": "$sign" }""".trimMargin()
+
+            try {
+                authResponse = HttpSender.sendPost("/api/public/v1/login/eds", payload)
+            } catch (e: Exception) {
+                throw AssertionError("Exception occurred during sending request: ${e.cause}")
+            }
+
+            val expectedResponse = Response.Builder()
+                .code(200)
+                .protocol(Protocol.HTTP_2)
+                .request(Request.Builder()
+                    .url("https://" + ConfigHelper.BACKEND_HOST)
+                    .build())
+                .message("OK")
+                .body(ResponseBody.create(
+                    "application/json".toMediaType(),
+                    "(accessToken)*(refreshToken)"
+                ))
+                .build()
+
+            authResponse shouldBe correctResponse(expectedResponse, true)
+        }
+
+        // TODO: ссылка на баг
+        scenario("POST /api/public/v1/refresh Пользователь может обновить свой accessToken, используя refreshToken").config(enabled = false) {
             val authResponse: Response
 
             val payload = """{
@@ -76,10 +121,14 @@ class AuthPublicControllerSpec : FeatureSpec({
                 throw AssertionError("Exception occurred during sending request: ${e.cause}")
             }
 
-            val newAccessToken = JSONObject(refreshResponse.body?.string()).getString("accessToken")
+            val newAccessToken = JSONObject( refreshResponse.body?.string() ).getString("accessToken")
 
             accessToken shouldNotBe newAccessToken
         }
+
+
     }
+
+
 
 })
