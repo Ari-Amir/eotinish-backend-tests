@@ -52,7 +52,6 @@ class AuthPublicControllerSpec : FeatureSpec({
 
         scenario("POST /api/public/v1/refresh Пользователь может обновить свой accessToken, используя refreshToken") {
             val authResponse: Response
-            val refreshResponse: Response
 
             val payload = """{
                 |"username": "${Environment.user}",
@@ -69,6 +68,8 @@ class AuthPublicControllerSpec : FeatureSpec({
             val body = JSONObject(authResponse.body?.string())
             val accessToken = body.getString("accessToken")
             val refreshToken = body.getString("refreshToken")
+
+            val refreshResponse: Response
 
             try {
                 refreshResponse = HttpSender.sendPost("/api/public/v1/refresh", "{ \"refreshToken\": \"$refreshToken\" }")

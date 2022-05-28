@@ -26,7 +26,8 @@ object Environment {
     fun start() {
         try {
             pgContainer.start()
-            backendContainer.start()
+//            TODO: Это старт контейрета с бекендом бекофиса. Этот запуск нужно отлаживать
+//            backendContainer.start()
 
             val dbPort = pgContainer.getPort().toString()
             val initSqlPath = "$currentDir/src/main/resources/init.sql"
