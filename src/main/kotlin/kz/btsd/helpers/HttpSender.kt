@@ -25,5 +25,14 @@ object HttpSender {
 
         return okHttpClient.newCall(request).execute()
     }
+
+    fun sendGet2(endpoint: String, accessToken: String) : Response {
+        val request = Request.Builder()
+            .header("Authorization", "Bearer $accessToken")
+            .url("https://${ConfigHelper.BACKEND_HOST}$endpoint")
+            .build()
+
+        return okHttpClient.newCall(request).execute()
+    }
 }
 
