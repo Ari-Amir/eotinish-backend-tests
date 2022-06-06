@@ -12,7 +12,6 @@ class UserPrivateControllerSpec : FeatureSpec({
 
         scenario("GET /api/private/v1/users/me Возвращает текущего пользователя") {
             val authResponse: Response
-            val response: Response
 
             val payload = """{
                 |"username": "${Environment.user}",
@@ -29,13 +28,15 @@ class UserPrivateControllerSpec : FeatureSpec({
             val authResponseBody = JSONObject(authResponse.body?.string())
             val accessToken = authResponseBody.getString("accessToken")
 
+            val getMeResponse: Response
+
             try {
-                response = HttpSender.sendGet2("/api/private/v1/users/me", accessToken)
+                getMeResponse = HttpSender.sendGetWithAccessToken("/api/private/v1/users/me", accessToken)
             } catch (e: Exception) {
                 throw AssertionError("Exception occurred during sending request: ${e.cause}")
             }
 
-            val body = JSONObject(response.body?.string())
+            val body = JSONObject(getMeResponse.body?.string())
             val login = body.getString("login")
 
             login shouldBe Environment.user
@@ -43,4 +44,5 @@ class UserPrivateControllerSpec : FeatureSpec({
     }
 }
 )
+
 

@@ -8,7 +8,7 @@ import kotlin.system.exitProcess
 
 fun main(args: Array<String>) {
 
-//   Environment.start()
+   Environment.start()
 
    val launcherArgs = parseLauncherArgs(args.toList())
 
@@ -32,7 +32,7 @@ fun main(args: Array<String>) {
       )
    }
 
-//   Environment.stop()
+   Environment.stop()
 
    // there could be threads in the background that will stop the kz.btsd.launcher shutting down
    // for example if a test keeps a thread running,

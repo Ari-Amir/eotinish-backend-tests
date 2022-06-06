@@ -93,7 +93,7 @@ class AuthPublicControllerSpec : FeatureSpec({
             authResponse shouldBe correctResponse(expectedResponse, true)
         }
 
-        // TODO: ссылка на баг
+        // MGOV-8930
         scenario("POST /api/public/v1/refresh Пользователь может обновить свой accessToken, используя refreshToken").config(enabled = false) {
             val authResponse: Response
 
@@ -126,9 +126,5 @@ class AuthPublicControllerSpec : FeatureSpec({
             accessToken shouldNotBe newAccessToken
         }
 
-
     }
-
-
-
 })
