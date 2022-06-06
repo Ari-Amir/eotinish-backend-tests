@@ -1,5 +1,3 @@
-import kz.btsd.containers.BackendContainer
-import kz.btsd.containers.TestPostgresContainer
 import kz.btsd.helpers.DBConnectionPool
 import kz.btsd.helpers.PostgreUtils
 import org.testcontainers.containers.Network
@@ -38,9 +36,15 @@ object Environment {
 //            val initSqlPath = "$currentDir/src/main/resources/init.sql"
 
             val appealId = getRandomAppealId()
+            val randomUUID = getRandomUUID()
             val fileName = "$currentDir/src/main/resources/init.sql"
             val sqlString = File(fileName).readText(Charsets.UTF_8)
-                .replace("#APPEAL_ID#", appealId)
+                .replace("#ID_AA#", appealId)
+                .replace("#ID_AH#", randomUUID)
+                .replace("#APPEAL_ID_AH#",appealId)
+                .replace("#ID_A#", appealId)
+                .replace("#REG_NUMBER_A#", "ЖТ-2052-${appealId.substring(6)}")
+                .replace("#SID_A#", randomUUID)
 
             pool = DBConnectionPool(dbPort)
             val resource = pool!!.getResource()
@@ -59,16 +63,12 @@ object Environment {
         network.close()
     }
 
-    private fun getRandomId() : String  = UUID.randomUUID().toString()
+    private fun getRandomUUID() : String  = UUID.randomUUID().toString()
 
-
-    private fun getRandomAppealId(): String {
-        return (10000000..99999999).random().toString()
-    }
-
-    private fun getRandomAppealNumber (postfix: String) : String {
+    private fun getRandomAppealId() : String {
         val calendar = Calendar.getInstance()
-        val currentDate = SimpleDateFormat("yyMMdd").format(calendar.time)
-        return "ЖТ-2052-$currentDate$postfix"
+        val date = SimpleDateFormat("yyMMdd").format(calendar.time).replaceRange(0..1,"52")
+        val random = (0..99999999).random().toString()
+        return "$date$random"
     }
 }
