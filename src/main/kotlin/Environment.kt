@@ -40,11 +40,13 @@ object Environment {
             val fileName = "$currentDir/src/main/resources/init.sql"
             val sqlString = File(fileName).readText(Charsets.UTF_8)
                 .replace("#ID_AA#", appealId)
+                .replace("#APPLICANT_ID_AA#", randomUUID)
                 .replace("#ID_AH#", randomUUID)
                 .replace("#APPEAL_ID_AH#",appealId)
                 .replace("#ID_A#", appealId)
                 .replace("#REG_NUMBER_A#", "ЖТ-2052-${appealId.substring(6)}")
                 .replace("#SID_A#", randomUUID)
+                .replace("#ID_APPLICANTS#", randomUUID)
 
             pool = DBConnectionPool(dbPort)
             val resource = pool!!.getResource()
