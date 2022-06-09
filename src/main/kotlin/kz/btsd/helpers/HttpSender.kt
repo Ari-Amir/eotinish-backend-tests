@@ -5,13 +5,12 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import org.json.JSONObject
-import org.testcontainers.shaded.org.bouncycastle.cert.ocsp.Req
 
 object HttpSender {
     private val okHttpClient = OkHttpClient()
     fun sendPost(endpoint: String, payload: String): Response {
         val request = Request.Builder()
-            .header("Content-Type", " application/json")
+            .header("Content-Type", "application/json")
             .url("https://${ConfigHelper.BACKEND_HOST}$endpoint")
             .method("POST", payload.toRequestBody())
             .build()
@@ -32,16 +31,22 @@ object HttpSender {
         val request = Request.Builder()
             .header("Authorization", "Bearer $accessToken")
             .url("https://${ConfigHelper.BACKEND_HOST}$endpoint")
+            .method("GET", body = null)
             .build()
 
         return okHttpClient.newCall(request).execute()
     }
 
-    fun sendPostWithAccessToken(endpoint: String, accessToken: String, payload: String)  {
+    fun sendPostWithAccessToken(endpoint: String, accessToken: String, payload: String) : Response {
        val request = Request.Builder()
            .url("https://${ConfigHelper.BACKEND_HOST}$endpoint")
            .method("POST", payload.toRequestBody())
+           .header("Content-Type", " application/json")
+           .header("Authorization", "Bearer $accessToken")
+           .header("Referer", "https://backoffice.stg.eotinish.btsdapps.net/")
+           .header("Host","backoffice.stg.eotinish.btsdapps.net")
            .build()
+        return okHttpClient.newCall(request).execute()
     }
 
     fun getAccessToken(): String {

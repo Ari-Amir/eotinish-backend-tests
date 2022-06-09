@@ -1,7 +1,9 @@
 package kz.btsd.helpers
 
+import okhttp3.Response
 import org.springframework.jdbc.BadSqlGrammarException
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.jdbc.core.RowCallbackHandler
 
 class PostgreUtils(private val jdbcTemplate: JdbcTemplate) {
 
@@ -13,6 +15,14 @@ class PostgreUtils(private val jdbcTemplate: JdbcTemplate) {
         }
     }
 
-
+    fun initializeDB1(sqlString: String) {
+        try {
+            jdbcTemplate.query(sqlString) {
+//                TODO: Получить ответ из БД с нужными данными
+            }
+        } catch (e: BadSqlGrammarException) {
+            throw e
+        }
+    }
 }
 

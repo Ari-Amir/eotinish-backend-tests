@@ -94,7 +94,7 @@ class AuthPublicControllerSpec : FeatureSpec({
         }
 
         // MGOV-8930
-        scenario("POST /api/public/v1/refresh Пользователь может обновить свой accessToken, используя refreshToken").config(enabled = false) {
+        scenario("POST /api/public/v1/refresh Пользователь может обновить свой accessToken, используя refreshToken. Баг MGOV-8930").config(enabled = false) {
             val authResponse: Response
 
             val payload = """{

@@ -26,6 +26,8 @@ dependencies {
     implementation("org.testcontainers:postgresql:1.12.3")
     implementation("org.postgresql:postgresql:42.2.7")
     implementation("org.springframework:spring-jdbc:5.1.9.RELEASE")
+
+    implementation("org.slf4j:slf4j-nop:2.0.0-alpha7")
 }
 
 application {
