@@ -3,7 +3,6 @@ package tests
 import io.kotest.core.spec.style.FeatureSpec
 import io.kotest.matchers.shouldBe
 import kz.btsd.helpers.ConfigHelper
-import kz.btsd.helpers.DBConnectionPool
 import kz.btsd.helpers.HttpSender
 import kz.btsd.helpers.PostgreUtils
 import kz.btsd.matchers.correctResponse
@@ -15,7 +14,7 @@ import okhttp3.ResponseBody
 
 
 class AppealActionControllerSpec : FeatureSpec({
-    feature("appeal-action-controller")
+    feature("appeal-action-controller").config(enabled = true)
     {
         scenario("POST /api/private/v1/pa/appeals/actions/revoke Пользователь может отозвать обращение") {
             //Авторизоваться

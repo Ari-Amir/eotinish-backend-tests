@@ -19,10 +19,20 @@ class PostgreUtils(private val jdbcTemplate: JdbcTemplate) {
         try {
             jdbcTemplate.query(sqlString) {
 //                TODO: Получить ответ из БД с нужными данными
+
             }
         } catch (e: BadSqlGrammarException) {
             throw e
         }
     }
+
+    fun initializeDB2(sqlString: String) : Int {
+        try {
+            return jdbcTemplate.queryForObject(sqlString, Int::class.java)
+        } catch (e: BadSqlGrammarException) {
+            throw e
+        }
+    }
 }
+
 
